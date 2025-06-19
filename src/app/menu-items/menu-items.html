@@ -1,9 +1,12 @@
 <!-- container -->
-<div class="container" ngSkipHydration>
-  <mat-form-field appearance="fill">
-    <mat-label>Enter your name</mat-label>
-    <input matInput placeholder="Name" [(ngModel)]="userName" />
-  </mat-form-field>
-  <h1>{{userName || ' '}}</h1>
+<div class="container">
+  <form action="form" [formGroup]="textFormGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your new name</mat-label>
+      <input matInput placeholder="New Name" formControlName="newUserName" />
+    </mat-form-field>
+  </form>
+  <h1>{{textFormGroup.controls.newUserName.value}}</h1>
 </div>
+
 <!-- container -->

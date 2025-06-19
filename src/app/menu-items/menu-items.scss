@@ -1,5 +1,6 @@
-.container {
-  margin: 0 auto;
+.container,
+.new-container {
   display: block;
-  width: 100%;
+  padding: 20px;
+  text-align: center;
 }
