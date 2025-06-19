@@ -14,7 +14,7 @@
       'save'}}
     </button>
   </form>
-  @for (name of userNewNameList; let i = $index; track i;) {
+  @for (name of userNameList; let i = $index; track i;) {
   <h1>
     {{i+1}}. {{ name }}
     <button type="button" (click)="deleteList(i)">

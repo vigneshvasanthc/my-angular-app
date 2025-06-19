@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component } from '@angular/core';
 import {
   FormControl,
-  FormControlName,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MenuItemsService } from './menu-items.service';
 
 @Component({
   selector: 'app-menu-items',
@@ -24,8 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './menu-items.scss',
 })
 export class MenuItems {
-  userNewNameList: string[] = [];
-
   isEdit = false;
   editingIndex: number | null = null;
 
@@ -33,37 +31,36 @@ export class MenuItems {
     newUserName: new FormControl('', Validators.required),
   });
 
+  constructor(private _menuItemsService: MenuItemsService) {}
+
+  get userNameList(): string[] {
+    return this._menuItemsService.getList();
+  }
+
   addList(): void {
     const nameNew = this.textFormGroup.get('newUserName')?.value?.trim();
-    console.log(nameNew);
 
-    // if (nameNew) {
-    //   this.userNewNameList.push(nameNew);
-    //   this.textFormGroup.get('newUserName')?.reset();
-    // }
     if (!nameNew) {
       return;
     }
 
     if (this.isEdit && this.editingIndex !== null) {
-      this.userNewNameList[this.editingIndex] = nameNew;
+      this._menuItemsService.updateName(this.editingIndex, nameNew);
       this.resetForm();
     } else {
-      this.userNewNameList.push(nameNew);
+      this._menuItemsService.addName(nameNew);
       this.textFormGroup.reset();
     }
   }
 
   deleteList(index: number): void {
-    this.userNewNameList.splice(index, 1);
+    this._menuItemsService.deleteName(index);
     this.resetForm();
   }
 
   updateList(index: number): void {
-    const nameNew = this.userNewNameList[index];
-    this.textFormGroup.patchValue({
-      newUserName: nameNew,
-    });
+    const nameNew = this.userNameList[index];
+    this.textFormGroup.patchValue({ newUserName: nameNew });
     this.isEdit = true;
     this.editingIndex = index;
   }
