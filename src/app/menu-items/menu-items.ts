@@ -20,54 +20,10 @@ import { MenuItemsService } from './menu-items.service';
     ReactiveFormsModule,
     MatIconModule,
   ],
+  providers: [MenuItemsService],
   templateUrl: './menu-items.html',
   styleUrl: './menu-items.scss',
 })
 export class MenuItems {
-  isEdit = false;
-  editingIndex: number | null = null;
-
-  textFormGroup = new FormGroup({
-    newUserName: new FormControl('', Validators.required),
-  });
-
-  constructor(private _menuItemsService: MenuItemsService) {}
-
-  get userNameList(): string[] {
-    return this._menuItemsService.getList();
-  }
-
-  addList(): void {
-    const nameNew = this.textFormGroup.get('newUserName')?.value?.trim();
-
-    if (!nameNew) {
-      return;
-    }
-
-    if (this.isEdit && this.editingIndex !== null) {
-      this._menuItemsService.updateName(this.editingIndex, nameNew);
-      this.resetForm();
-    } else {
-      this._menuItemsService.addName(nameNew);
-      this.textFormGroup.reset();
-    }
-  }
-
-  deleteList(index: number): void {
-    this._menuItemsService.deleteName(index);
-    this.resetForm();
-  }
-
-  updateList(index: number): void {
-    const nameNew = this.userNameList[index];
-    this.textFormGroup.patchValue({ newUserName: nameNew });
-    this.isEdit = true;
-    this.editingIndex = index;
-  }
-
-  resetForm(): void {
-    this.textFormGroup.reset();
-    this.isEdit = false;
-    this.editingIndex = null;
-  }
+  constructor(public _menuItemsService: MenuItemsService) {}
 }
