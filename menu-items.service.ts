@@ -4,51 +4,44 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Injectable()
 export class MenuItemsService {
   private nameList: string[] = [];
-  isEdit = false;
-  editingIndex: number | null = null;
-
-  textFormGroup = new FormGroup({
-    newUserName: new FormControl('', Validators.required),
-  });
+  private isEdit = false;
+  private editingIndex: number | null = null;
 
   getList(): string[] {
     return this.nameList;
   }
 
-  getForm(): FormGroup {
-    return this.textFormGroup;
+  getIsEditing(): boolean {
+    return this.isEdit;
   }
 
-  addOrUpdate(): void {
-    const nameNew = this.textFormGroup.get('newUserName')?.value?.trim();
-    if (!nameNew) {
-      return;
-    }
-
-    if (this.isEdit && this.editingIndex !== null) {
-      this.nameList[this.editingIndex] = nameNew;
-    } else {
-      this.nameList.push(nameNew);
-    }
-    this.resetForm();
+  getEditIndex(): number | null {
+    return this.editingIndex;
   }
 
-  delete(index: number): void {
-    this.nameList.splice(index, 1);
-    this.resetForm();
-  }
-
-  edit(index: number): void {
-    const value = this.nameList[index];
-
-    this.textFormGroup.patchValue({ newUserName: value });
+  startEdit(index: number): void {
     this.isEdit = true;
     this.editingIndex = index;
   }
 
-  resetForm(): void {
-    this.textFormGroup.reset();
+  cancelEdit(): void {
     this.isEdit = false;
     this.editingIndex = null;
+  }
+
+  add(name: string): void {
+    this.nameList.push(name);
+  }
+
+  update(name: string): void {
+    if (this.editingIndex !== null) {
+      this.nameList[this.editingIndex] = name;
+    }
+    this.cancelEdit();
+  }
+
+  delete(index: number): void {
+    this.nameList.splice(index, 1);
+    this.cancelEdit();
   }
 }

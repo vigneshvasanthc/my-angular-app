@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -25,5 +25,41 @@ import { MenuItemsService } from './menu-items.service';
   styleUrl: './menu-items.scss',
 })
 export class MenuItems {
-  constructor(public _menuItemsService: MenuItemsService) {}
+  private readonly _menuItemsService = inject(MenuItemsService);
+
+  textFormGroup = new FormGroup({
+    newUserName: new FormControl('', Validators.required),
+  });
+
+  get userNameList(): string[] {
+    return this._menuItemsService.getList();
+  }
+
+  get isEdit(): boolean {
+    return this._menuItemsService.getIsEditing();
+  }
+
+  addOrUpdate(): void {
+    const name = this.textFormGroup.get('newUserName')?.value?.trim();
+    if (!name) {
+      return;
+    }
+    if (this.isEdit) {
+      this._menuItemsService.update(name);
+    } else {
+      this._menuItemsService.add(name);
+    }
+    this.textFormGroup.reset();
+  }
+
+  delete(index: number): void {
+    this._menuItemsService.delete(index);
+    this.textFormGroup.reset();
+  }
+
+  edit(index: number): void {
+    const actualName = this.userNameList[index];
+    this.textFormGroup.patchValue({ newUserName: actualName });
+    this._menuItemsService.startEdit(index);
+  }
 }
