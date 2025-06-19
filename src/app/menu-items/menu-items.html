@@ -1,16 +1,29 @@
 <!-- container -->
 <div class="container">
-  <form action="form" [formGroup]="textFormGroup">
+  <form [formGroup]="textFormGroup">
     <mat-form-field appearance="fill">
       <mat-label>Enter your new name</mat-label>
       <input matInput placeholder="New Name" formControlName="newUserName" />
     </mat-form-field>
-    <button type="button" (click)="addList()">
-      <i class="fa-solid fa-plus"></i>
+    <button
+      type="button"
+      (click)="addList()"
+      [disabled]="textFormGroup.invalid"
+    >
+      <mat-icon>{{isEdit ? 'edit' : 'add'}}</mat-icon> {{isEdit ? 'update':
+      'save'}}
     </button>
   </form>
-  @for(let name of userNameList; track name) {
-  <h1>{{name}}</h1>
+  @for (name of userNewNameList; let i = $index; track i;) {
+  <h1>
+    {{i+1}}. {{ name }}
+    <button type="button" (click)="deleteList(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button type="button" (click)="updateList(i)">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </h1>
   }
 </div>
 
