@@ -1,0 +1,9 @@
+<!-- container -->
+<div class="container" ngSkipHydration>
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your name</mat-label>
+    <input matInput placeholder="Name" [(ngModel)]="userName" />
+  </mat-form-field>
+  <h1>{{userName || ' '}}</h1>
+</div>
+<!-- container -->
