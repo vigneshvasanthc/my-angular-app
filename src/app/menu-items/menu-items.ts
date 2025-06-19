@@ -22,7 +22,17 @@ import {
 })
 export class MenuItems {
   newUserName: any;
+  userNameList: string[] = [];
+
   textFormGroup = new FormGroup({
     newUserName: new FormControl(''),
   });
+
+  addList(): void {
+    const name = this.textFormGroup.get('newUserName')?.value?.trim();
+    if (name) {
+      this.userNameList.push(name);
+      this.textFormGroup.get('newUserName')?.reset();
+    }
+  }
 }

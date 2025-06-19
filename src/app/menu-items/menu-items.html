@@ -5,8 +5,13 @@
       <mat-label>Enter your new name</mat-label>
       <input matInput placeholder="New Name" formControlName="newUserName" />
     </mat-form-field>
+    <button type="button" (click)="addList()">
+      <i class="fa-solid fa-plus"></i>
+    </button>
   </form>
-  <h1>{{textFormGroup.controls.newUserName.value}}</h1>
+  @for(let name of userNameList; track name) {
+  <h1>{{name}}</h1>
+  }
 </div>
 
 <!-- container -->
