@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MenuItems } from './menu-items/menu-items';
+import { TopNavigationBar } from './top-navigation-bar/top-navigation-bar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MenuItems],
+  imports: [RouterOutlet, TopNavigationBar],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
