@@ -1,0 +1,30 @@
+<!-- container -->
+<div class="container">
+  <form [formGroup]="_menuItemsService.getForm()">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your new name</mat-label>
+      <input matInput placeholder="New Name" formControlName="newUserName" />
+    </mat-form-field>
+    <button
+      type="button"
+      (click)="_menuItemsService.addOrUpdate()"
+      [disabled]="_menuItemsService.getForm().invalid"
+    >
+      <mat-icon>{{_menuItemsService.isEdit ? 'edit' : 'add'}}</mat-icon>
+      {{_menuItemsService.isEdit ? 'update': 'save'}}
+    </button>
+  </form>
+  @for (name of _menuItemsService.getList(); let i = $index; track i;) {
+  <h1>
+    {{i+1}}. {{ name }}
+    <button type="button" (click)="_menuItemsService.delete(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button type="button" (click)="_menuItemsService.edit(i)">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </h1>
+  }
+</div>
+
+<!-- container -->
