@@ -1,0 +1,11 @@
+<div class="top-navbar-container">
+  <div class="menu-section">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="'/home'">Home</button>
+      <button mat-menu-item [routerLink]="'/menu-items'">Menu Items</button>
+    </mat-menu>
+  </div>
+</div>
