@@ -8,13 +8,19 @@
 
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
-      <mat-cell *matCellDef="let todo"> {{ todo.title }} </mat-cell>
+      <mat-cell *matCellDef="let todo">
+        {{ todo.title | lastWordCap}}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="completed">
       <mat-header-cell *matHeaderCellDef> Completed </mat-header-cell>
       <mat-cell *matCellDef="let todo">
-        <mat-icon color="primary">
+        <mat-icon
+          class="todo-icon"
+          color="primary"
+          [appToDoListColor]="todo.completed"
+        >
           {{ todo.completed ? 'check_circle' : 'cancel' }}
         </mat-icon>
       </mat-cell>
